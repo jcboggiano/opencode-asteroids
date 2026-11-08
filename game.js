@@ -185,6 +185,7 @@ class Ship {
     this.invincible    = 3;
     this.shootCooldown = 0;
     this.speedBoost    = 0;
+    this.tripleShot    = 0;
     this.dead          = false;
   }
 
@@ -193,6 +194,7 @@ class Ship {
     if (this.invincible    > 0) this.invincible    -= dt;
     if (this.shootCooldown > 0) this.shootCooldown -= dt;
     if (this.speedBoost    > 0) this.speedBoost    -= dt;
+    if (this.tripleShot    > 0) this.tripleShot    -= dt;
 
     const ROT   = 3.5;   // rad/s
     const THRUST = this.speedBoost > 0 ? 520 : 260;  // px/s² (x2 con power-up)
@@ -219,6 +221,10 @@ class Ship {
     const NOSE = 21;
     const ox = this.x + Math.cos(this.angle) * NOSE;
     const oy = this.y + Math.sin(this.angle) * NOSE;
+    if (this.tripleShot > 0) {
+      const SPREAD = 0.18;
+      return [-SPREAD, 0, SPREAD].map(a => new Bullet(ox, oy, this.angle + a));
+    }
     return [new Bullet(ox, oy, this.angle)];
   }
 
@@ -311,29 +317,46 @@ class PowerUp {
   draw() {
     const pulse = 1 + Math.sin(this.phase) * 0.12;
     const alpha = this.ttl < 2 ? (Math.floor(this.ttl * 6) % 2 === 0 ? 0.35 : 1) : 1;
+    const isTriple = this.type === 'triple';
+    const color = isTriple ? '#ffd54a' : '#00e5ff';
+    const fill  = isTriple ? 'rgba(255, 213, 74, 0.12)' : 'rgba(0, 229, 255, 0.12)';
 
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.globalAlpha = alpha;
 
-    ctx.strokeStyle = '#00e5ff';
-    ctx.fillStyle   = 'rgba(0, 229, 255, 0.12)';
+    ctx.strokeStyle = color;
+    ctx.fillStyle   = fill;
     ctx.lineWidth   = 1.5;
     ctx.beginPath();
     ctx.arc(0, 0, this.radius * pulse, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
-    ctx.beginPath();
-    ctx.moveTo( 2, -9);
-    ctx.lineTo(-6,  1);
-    ctx.lineTo(-1,  1);
-    ctx.lineTo(-2,  9);
-    ctx.lineTo( 6, -1);
-    ctx.lineTo( 1, -1);
-    ctx.closePath();
-    ctx.fillStyle = '#00e5ff';
-    ctx.fill();
+    if (isTriple) {
+      ctx.strokeStyle = '#ffd54a';
+      ctx.lineWidth   = 2;
+      for (const ox of [-5, 0, 5]) {
+        ctx.beginPath();
+        ctx.moveTo(ox,  7);
+        ctx.lineTo(ox, -4);
+        ctx.moveTo(ox - 2, -4);
+        ctx.lineTo(ox,     -7);
+        ctx.lineTo(ox + 2, -4);
+        ctx.stroke();
+      }
+    } else {
+      ctx.beginPath();
+      ctx.moveTo( 2, -9);
+      ctx.lineTo(-6,  1);
+      ctx.lineTo(-1,  1);
+      ctx.lineTo(-2,  9);
+      ctx.lineTo( 6, -1);
+      ctx.lineTo( 1, -1);
+      ctx.closePath();
+      ctx.fillStyle = '#00e5ff';
+      ctx.fill();
+    }
 
     ctx.restore();
   }
@@ -462,7 +485,10 @@ function update(dt) {
         a.dead = true;
         score += a.isShootingStar ? 150 : POINTS[a.size];
         explode(a.x, a.y, a.size * 5);
-        if (Math.random() < 0.15) powerups.push(new PowerUp(a.x, a.y));
+        if (Math.random() < 0.15) {
+          const type = Math.random() < 0.5 ? 'speed' : 'triple';
+          powerups.push(new PowerUp(a.x, a.y, type));
+        }
         newAsteroids.push(...a.split());
       }
     }
@@ -485,6 +511,7 @@ function update(dt) {
     if (!p.dead && dist(ship, p) < ship.radius + p.radius) {
       p.dead = true;
       if (p.type === 'speed') ship.speedBoost = 5;
+      else if (p.type === 'triple') ship.tripleShot = 5;
     }
   }
   powerups = powerups.filter(p => !p.dead);
@@ -521,6 +548,12 @@ function drawHUD() {
   if (ship.speedBoost > 0) {
     ctx.fillStyle = '#00e5ff';
     ctx.fillText(`VELOCIDAD ${ship.speedBoost.toFixed(1)}s`, 14, 48);
+    ctx.fillStyle = '#fff';
+  }
+
+  if (ship.tripleShot > 0) {
+    ctx.fillStyle = '#ffd54a';
+    ctx.fillText(`TRIPLE ${ship.tripleShot.toFixed(1)}s`, 14, ship.speedBoost > 0 ? 70 : 48);
     ctx.fillStyle = '#fff';
   }
 
