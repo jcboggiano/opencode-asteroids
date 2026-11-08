@@ -43,3 +43,4 @@ Luego visita `http://localhost:3000`.
 - 3 vidas con invencibilidad temporal al reaparecer (parpadeo)
 - Asteroides se parten en fragmentos más pequeños al ser destruidos
 - Partículas de explosión al destruir asteroides
+- Power-up **Velocidad**: los asteroides destruidos pueden soltarlo (15% de probabilidad); al recogerlo, el propulsor acelera el doble durante 5 segundos
