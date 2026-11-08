@@ -29,6 +29,7 @@ Luego visita `http://localhost:3000`.
 | `←` `→`   | Rotar nave |
 | `↑`       | Propulsar  |
 | `Espacio` | Disparar   |
+| `S`       | Cambiar skin de la nave |
 
 ## Puntuación
 
@@ -46,3 +47,4 @@ Luego visita `http://localhost:3000`.
 - Power-up **Velocidad**: los asteroides destruidos pueden soltarlo (15% de probabilidad); al recogerlo, el propulsor acelera el doble durante 5 segundos
 - Power-up **Triple Shot**: mismo drop que Velocidad (50/50); durante 5 segundos la nave dispara 3 balas en abanico
 - **Estrella fugaz**: aparece cada ~15 segundos, se mueve al triple de velocidad, se desvanece a los 8 segundos y otorga 150 puntos si la destruyes
+- **Skins de nave**: 4 apariencias (Clásica, Neón, Roja y Dorada) que cambian silueta, color y brillo; se seleccionan con `S` y se guardan en el navegador
