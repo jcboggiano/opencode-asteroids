@@ -44,4 +44,6 @@ Luego visita `http://localhost:3000`.
 - Asteroides se parten en fragmentos más pequeños al ser destruidos
 - Partículas de explosión al destruir asteroides
 - Power-up **Velocidad**: los asteroides destruidos pueden soltarlo (15% de probabilidad); al recogerlo, el propulsor acelera el doble durante 5 segundos
+- Power-up **Escudo**: mismo sistema de aparición; al recogerlo, la nave queda protegida de los proyectiles enemigos durante 6 segundos (anillo verde alrededor de la nave)
 - **Estrella fugaz**: aparece cada ~15 segundos, se mueve al triple de velocidad, se desvanece a los 8 segundos y otorga 150 puntos si la destruyes
+- **OVNI enemigo**: aparece cada ~10-15 segundos desde un borde, dispara proyectiles hacia la nave y otorga 200 puntos si lo destruyes
