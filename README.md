@@ -44,7 +44,9 @@ Luego visita `http://localhost:3000`.
 - 3 vidas con invencibilidad temporal al reaparecer (parpadeo)
 - Asteroides se parten en fragmentos más pequeños al ser destruidos
 - Partículas de explosión al destruir asteroides
-- Power-up **Velocidad**: los asteroides destruidos pueden soltarlo (15% de probabilidad); al recogerlo, el propulsor acelera el doble durante 5 segundos
-- Power-up **Triple Shot**: mismo drop que Velocidad (50/50); durante 5 segundos la nave dispara 3 balas en abanico
+- Power-up **Velocidad**: lo sueltan asteroides (15%) y OVNIs (35%); al recogerlo, el propulsor acelera el doble durante 5 segundos
+- Power-up **Triple Shot**: lo sueltan asteroides (15%) y OVNIs (35%); durante 5 segundos la nave dispara 3 balas en abanico
+- Power-up **Escudo**: lo sueltan asteroides (15%) y OVNIs (35%); durante 6 segundos la nave queda protegida por un anillo verde frente a proyectiles y OVNIs
 - **Estrella fugaz**: aparece cada ~15 segundos, se mueve al triple de velocidad, se desvanece a los 8 segundos y otorga 150 puntos si la destruyes
+- **OVNI enemigo**: aparece cada ~10-15 segundos desde un borde, dispara proyectiles hacia la nave y otorga 200 puntos si lo destruyes
 - **Skins de nave**: 4 apariencias (Clásica, Neón, Roja y Dorada) que cambian silueta, color y brillo; se seleccionan con `S` y se guardan en el navegador
